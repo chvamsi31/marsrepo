@@ -32,3 +32,9 @@ public interface AddressRepository extends CrudRepository<Address, Integer> {
 > java -jar target/person-service-0.0.1-SNAPSHOT.jar
 ```
 
+**To test the app**
+
+```
+Run the test cases from PersonServiceTest under src/main/test/com.mars.service.test
+```
+
