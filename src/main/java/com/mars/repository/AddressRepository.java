@@ -1,9 +1,11 @@
 package com.mars.repository;
 
 import com.mars.model.Address;
-import org.springframework.data.repository.CrudRepository;
+import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AddressRepository extends CrudRepository<Address, Integer> {
+public interface AddressRepository extends JpaRepository<Address, Integer> {
+    List<Address> findAll();
 }

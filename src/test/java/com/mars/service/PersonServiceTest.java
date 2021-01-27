@@ -2,6 +2,8 @@ package com.mars.service;
 
 import com.mars.model.Address;
 import com.mars.model.Person;
+import com.mars.repository.AddressRepository;
+import com.mars.repository.PersonRepository;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
@@ -20,10 +22,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class PersonServiceTest {
 
     @Autowired
-    private PersonService personService;
+    private PersonRepository personRepository;
 
     @Autowired
-    private AddressService addressService;
+    private AddressRepository addressRepository;
 
     @Test
     public void testSavePerson() {
@@ -33,9 +35,9 @@ public class PersonServiceTest {
         person.setFirstName("Toal");
         person.setLastName("Eric");
 
-        Person person1 = personService.save(person);
+        Person person1 = personRepository.save(person);
 
-        boolean flag = personService.exists(101);
+        boolean flag = personRepository.exists(101);
         assertTrue(flag);
         assertEquals(person1.getFirstName(), person.getFirstName());
     }
@@ -48,13 +50,13 @@ public class PersonServiceTest {
         person.setFirstName("Eric");
         person.setLastName("Toal");
 
-        Person person1 = personService.save(person);
+        Person person1 = personRepository.save(person);
 
         person1.setFirstName("Srinivas");
 
-        Person person2 = personService.save(person1);
+        Person person2 = personRepository.save(person1);
 
-        boolean flag = personService.exists(102);
+        boolean flag = personRepository.exists(102);
         assertTrue(flag);
         assertEquals(person2.getFirstName(), person1.getFirstName());
     }
@@ -67,10 +69,10 @@ public class PersonServiceTest {
         person.setFirstName("Eric");
         person.setLastName("Toal");
 
-        personService.save(person);
-        personService.delete(102);
+        personRepository.save(person);
+        personRepository.delete(102);
 
-        boolean flag = personService.exists(102);
+        boolean flag = personRepository.exists(102);
         assertFalse(flag);
     }
 
@@ -87,10 +89,10 @@ public class PersonServiceTest {
         person1.setFirstName("Malav");
         person1.setLastName("Patric");
 
-        personService.save(person);
-        personService.save(person1);
+        personRepository.save(person);
+        personRepository.save(person1);
 
-        long count = personService.count();
+        long count = personRepository.count();
 
         assertEquals(2, count);
     }
@@ -108,10 +110,10 @@ public class PersonServiceTest {
         person1.setFirstName("Malav");
         person1.setLastName("Patric");
 
-        personService.save(person);
-        personService.save(person1);
+        personRepository.save(person);
+        personRepository.save(person1);
 
-        List<Person> personList = personService.allPersons();
+        List<Person> personList = personRepository.findAll();
 
         assertEquals(2, personList.size());
     }
@@ -122,7 +124,7 @@ public class PersonServiceTest {
         person.setId(101);
         person.setFirstName("Toal");
         person.setLastName("Eric");
-        personService.save(person);
+        personRepository.save(person);
 
         Address address = new Address();
         address.setId(201);
@@ -131,13 +133,13 @@ public class PersonServiceTest {
         address.setState("Telangana");
         address.setPostalCode("500072");
         address.setPerson(person);
-        Address address1 = addressService.save(address);
+        Address address1 = addressRepository.save(address);
         List<Address> addressList = new ArrayList<>();
         addressList.add(address);
         person.setAddresses(addressList);
-        personService.save(person);
+        personRepository.save(person);
 
-        boolean flag = addressService.exists(201);
+        boolean flag = addressRepository.exists(201);
         assertTrue(flag);
         assertEquals(address1.getCity(), address.getCity());
         assertEquals(address1.getState(), address.getState());
@@ -150,7 +152,7 @@ public class PersonServiceTest {
         person.setId(101);
         person.setFirstName("Toal");
         person.setLastName("Eric");
-        personService.save(person);
+        personRepository.save(person);
 
         Address address = new Address();
         address.setId(201);
@@ -173,17 +175,17 @@ public class PersonServiceTest {
         addressList.add(address1);
         person.setAddresses(addressList);
 
-        addressService.save(address);
-        addressService.save(address1);
+        addressRepository.save(address);
+        addressRepository.save(address1);
 
-        personService.save(person);
+        personRepository.save(person);
 
-        boolean flag = addressService.exists(201);
+        boolean flag = addressRepository.exists(201);
         assertTrue(flag);
-        boolean flag1 = addressService.exists(202);
+        boolean flag1 = addressRepository.exists(202);
         assertTrue(flag1);
-        assertEquals(2, personService.allPersons().get(0).getAddresses().size());
-        assertEquals(2, personService.findOne(101).getAddresses().size());
+        assertEquals(2, personRepository.findAll().get(0).getAddresses().size());
+        assertEquals(2, personRepository.findOne(101).getAddresses().size());
 
     }
 
@@ -193,7 +195,7 @@ public class PersonServiceTest {
         person.setId(101);
         person.setFirstName("Toal");
         person.setLastName("Eric");
-        personService.save(person);
+        personRepository.save(person);
 
         Address address = new Address();
         address.setId(201);
@@ -202,17 +204,17 @@ public class PersonServiceTest {
         address.setState("Telangana");
         address.setPostalCode("500072");
         address.setPerson(person);
-        addressService.save(address);
+        addressRepository.save(address);
         List<Address> addressList = new ArrayList<>();
         addressList.add(address);
         person.setAddresses(addressList);
-        personService.save(person);
+        personRepository.save(person);
 
-        Address address2 = addressService.findOne(201);
+        Address address2 = addressRepository.findOne(201);
         address2.setPostalCode("500091");
-        addressService.save(address2);
+        addressRepository.save(address2);
 
-        assertEquals(addressService.findOne(201).getPostalCode(), "500091");
+        assertEquals(addressRepository.findOne(201).getPostalCode(), "500091");
     }
 
     @Test
@@ -221,7 +223,7 @@ public class PersonServiceTest {
         person.setId(101);
         person.setFirstName("Toal");
         person.setLastName("Eric");
-        personService.save(person);
+        personRepository.save(person);
 
         Address address = new Address();
         address.setId(201);
@@ -230,15 +232,15 @@ public class PersonServiceTest {
         address.setState("Telangana");
         address.setPostalCode("500072");
         address.setPerson(person);
-        addressService.save(address);
+        addressRepository.save(address);
         List<Address> addressList = new ArrayList<>();
         addressList.add(address);
         person.setAddresses(addressList);
-        personService.save(person);
+        personRepository.save(person);
 
-        addressService.delete(201);
+        addressRepository.delete(201);
 
-        boolean flag = addressService.exists(201);
+        boolean flag = addressRepository.exists(201);
         assertFalse(flag);
     }
 }

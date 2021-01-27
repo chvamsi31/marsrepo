@@ -32,9 +32,24 @@ public interface AddressRepository extends CrudRepository<Address, Integer> {
 > java -jar target/person-service-0.0.1-SNAPSHOT.jar
 ```
 
-**To test the app**
+**Test URL's**
+```
+1. Add Person : http://localhost:8181/addperson
+2. Edit Person : http://localhost:8181/updateperson
+3. Delete Person : http://localhost:8181/deleteperson
+4. Add Address : http://localhost:8181/addaddress
+5. Update Address : http://localhost:8181/updateaddress
+6. Delete Address : http://localhost:8181/deleteaddress
+7. Person's Count : http://localhost:8181/personcount
+8. Person's List : http://localhost:8181/allpersons
+
+```
+
+
+**Test Cases**
 
 ```
 Run the test cases from PersonServiceTest under src/main/test/com.mars.service.test
 ```
+
 

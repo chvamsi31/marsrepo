@@ -29,6 +29,6 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public Address findOne(Integer id) {
-        return addressRepository.findOne(id);
+        return addressRepository.getOne(id);
     }
 }

@@ -1,5 +1,6 @@
 package com.mars.model;
 
+import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,25 +8,32 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table
-public class Address {
+public class Address implements Serializable {
+
+    private static final long SerialVersionUID = 10L;
 
     @Id
     @Column(name = "addressid")
     Integer id;
 
     @Column(name = "street")
+    @NotBlank(message = "Street is mandatory")
     private String street;
 
     @Column(name = "city")
+    @NotBlank(message = "City is mandatory")
     private String city;
 
     @Column(name = "state")
+    @NotBlank(message = "State is mandatory")
     private String state;
 
     @Column(name = "postalcode")
+    @NotBlank(message = "Postal code is mandatory")
     private String postalCode;
 
     @ManyToOne(cascade = CascadeType.ALL)
